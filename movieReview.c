@@ -24,7 +24,6 @@ void retrieveAndDisplayMovieReviews(char[] movieTitle);
 int main(void) 
 {
 	
-	
 	getch();
 	return 0;
 }
@@ -52,13 +51,46 @@ int genreUserInput(void)
  ******************************************************************************/
 void retrieveAndDisplayMovieTitles(int genre)
 {
+	FILE* fp; 
+	char stringGenre[] = "";
+	char c;
 	
+	switch(genre){		// Searches for genre, otherwise, throw an error
+		// Horror
+		case 1: strcat(stringGenre, "Horror.txt"); break;
+		
+		// Romance
+		case 2: strcat(stringGenre, "Romance.txt"); break;
+		
+		// Comedy
+		case 3: strcat(stringGenre, "Comedy.txt"); break;
+		
+		// Fantasy
+		case 4: strcat(stringGenre, "Fantasy.txt"); break;
+		
+		// Action
+		case 5: strcat(stringGenre, "Action.txt"); break;
+		
+		default: printf("ERROR: Genre doesn't exist!"); break;
+	}
+	
+	if(strlen(stringGenre) != 0){
+		fp = fopen(stringGenre, "r");
+	
+		if(fp != NULL){	
+    		while ((c = getc(fp)) != EOF){		// Iterates until the End of File (EOF)
+    			putchar(c);						// Directly print the movie titles
+			}
+			
+			fclose(fp);							// Closes the file
+		}
+	}
 }
 
 /******************************************************************************
  * With the displayed movie titles, this function will ask the user to input  *
  * the full movie title. The function will return the full movie title to the *
- * main function.																					*
+ * main function.															  *
  ******************************************************************************/
 char * movieTitleUserInput(void)
 {
