@@ -14,7 +14,7 @@
 int genreUserInput(void);
 void retrieveAndDisplayMovieTitles(int genre);
 char * movieTitleUserInput(void);
-//void retrieveAndDisplayMovieReviews(char movieTitle[]);
+void retrieveAndDisplayMovieReviews(char movieTitle[]);
 
 /******************************************************************************
  * The program will only stop if the user chooses to exit the program. If     *
@@ -29,8 +29,7 @@ int main(void)
 	genre = genreUserInput();
 	retrieveAndDisplayMovieTitles(genre);
 	stringMovieTitle = movieTitleUserInput();
-	
-	printf("%s", stringMovieTitle);
+	retrieveAndDisplayMovieReviews(stringMovieTitle);
 	
 	getch();
 	return 0;
@@ -124,20 +123,46 @@ char * movieTitleUserInput(void)
 	printf("\nPlease enter the movie title: ");
 	fflush(stdin);	
 //	scanf("%s", stringMovieTitle);
-   fgets (stringMovieTitle, 100, stdin);
+	fgets (stringMovieTitle, 100, stdin);
+	stringMovieTitle[strlen(stringMovieTitle)-1] = '\0';
 	
 	return stringMovieTitle;
 }
 
 /******************************************************************************
- * This function will accept a string variable containing the full movie 		*
- * title....																						*
- * (1) Concatenate the word "".txt"" to the movie title variable					*
- * (2) Using the string, retrieve and display the movie contents					*
+ * This function will accept a string variable containing the full movie   	  *
+ * title....																  *
+ * (1) Concatenate the word "".txt"" to the movie title variable			  *
+ * (2) Using the string, retrieve and display the movie contents	   		  *
  * (3)The function should notify the user if he/she inputted the wrong movie  *
- *    title (case-sensitive)																	*
+ *    title (case-sensitive)												  *
  ******************************************************************************/
 void retrieveAndDisplayMovieReviews(char * movieTitle)
 {
+	FILE *fp;
 	
+	if(strlen(movieTitle) > 0){
+		printf("\n\t%s\n", movieTitle);
+		char *movie = strcat(movieTitle, ".txt");
+		char c;
+		
+		fp = fopen(movie, "r");
+		
+		if(fp != NULL){
+			printf( "\n");
+			while((c = getc(fp)) != EOF){
+				putchar(c);
+			}
+			printf("\n");
+		} else {
+			printf("\nError: Movie review for %s was not found.", movieTitle);
+			exit(1);
+		}
+		
+		fclose(fp);
+		exit(0);
+	} else {
+		printf("\nError: You did not input a movie.");
+		exit(1);
+	}
 }
