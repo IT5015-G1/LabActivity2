@@ -77,8 +77,8 @@ int genreUserInput(void)
 void retrieveAndDisplayMovieTitles(int genre)
 {
 	FILE* fp; 
-	char stringGenre[] = "";
-	char c;
+	char stringGenre[] = "";		// Genre for file
+	char c;							// Contents of the file
 	
 	switch(genre){		// Searches for genre, otherwise, throw an error
 		// Horror
