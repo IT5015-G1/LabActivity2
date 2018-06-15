@@ -13,8 +13,8 @@
  ******************************************************************/
 int genreUserInput(void);
 void retrieveAndDisplayMovieTitles(int genre);
-char * movieTitleUserInput(void);
-void retrieveAndDisplayMovieReviews(char[] movieTitle);
+//char * movieTitleUserInput(void);
+//void retrieveAndDisplayMovieReviews(char[] movieTitle);
 
 /******************************************************************************
  * The program will only stop if the user chooses to exit the program. If     *
@@ -35,7 +35,24 @@ int main(void)
  ******************************************************************************/
 int genreUserInput(void)
 {
-	
+	int genre = 0;
+
+     do{
+        printf("\nMovie Genres");
+        printf("\n(1) Horror");
+        printf("\n(2) Romance");
+        printf("\n(3) Comedy");
+        printf("\n(4) Fantasy");
+        printf("\n(5) Action");
+        printf("\n\nPlease choose a movie genre: ");
+        scanf("%d",&genre);
+     
+        if(genre != 1 && genre != 2 && genre != 3 && genre != 4 && genre != 5){
+           printf("\n\nERROR: INPUT INVALID!\n");
+        }
+     }while (genre != 1 && genre != 2 && genre != 3 && genre != 4 && genre != 5);
+     
+     return genre;
 }
 
 /******************************************************************************
@@ -103,7 +120,7 @@ char * movieTitleUserInput(void)
  * (1) Concatenate the word "".txt"" to the movie title variable					*
  * (2) Using the string, retrieve and display the movie contents					*
  ******************************************************************************/
-void retrieveAndDisplayMovieReviews(char[] movieTitle)
+void retrieveAndDisplayMovieReviews(char* movieTitle)
 {
 	
 }
