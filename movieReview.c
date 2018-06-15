@@ -13,8 +13,8 @@
  ******************************************************************/
 int genreUserInput(void);
 void retrieveAndDisplayMovieTitles(int genre);
-//char * movieTitleUserInput(void);
-//void retrieveAndDisplayMovieReviews(char[] movieTitle);
+char * movieTitleUserInput(void);
+//void retrieveAndDisplayMovieReviews(char movieTitle[]);
 
 /******************************************************************************
  * The program will only stop if the user chooses to exit the program. If     *
@@ -23,6 +23,14 @@ void retrieveAndDisplayMovieTitles(int genre);
  ******************************************************************************/
 int main(void) 
 {
+	char * stringMovieTitle;
+	int genre;
+	
+	genre = genreUserInput();
+	retrieveAndDisplayMovieTitles(genre);
+	stringMovieTitle = movieTitleUserInput();
+	
+	printf("%s", stringMovieTitle);
 	
 	getch();
 	return 0;
@@ -111,7 +119,14 @@ void retrieveAndDisplayMovieTitles(int genre)
  ******************************************************************************/
 char * movieTitleUserInput(void)
 {
+	char * stringMovieTitle = (char*)malloc(sizeof(char)*100);
 	
+	printf("\nPlease enter the movie title: ");
+	fflush(stdin);	
+//	scanf("%s", stringMovieTitle);
+   fgets (stringMovieTitle, 100, stdin);
+	
+	return stringMovieTitle;
 }
 
 /******************************************************************************
@@ -119,8 +134,10 @@ char * movieTitleUserInput(void)
  * title....																						*
  * (1) Concatenate the word "".txt"" to the movie title variable					*
  * (2) Using the string, retrieve and display the movie contents					*
+ * (3)The function should notify the user if he/she inputted the wrong movie  *
+ *    title (case-sensitive)																	*
  ******************************************************************************/
-void retrieveAndDisplayMovieReviews(char* movieTitle)
+void retrieveAndDisplayMovieReviews(char * movieTitle)
 {
 	
 }
