@@ -137,6 +137,8 @@ void retrieveAndDisplayMovieTitles(int genre)
 			fclose(fp);							// Closes the file
 		}
 	}
+	
+	printf("\n\n");
 }
 
 /******************************************************************************
@@ -176,6 +178,7 @@ void retrieveAndDisplayMovieReviews(char * movieTitle)
 		
 		fp = fopen(movie, "r");
 		
+		
 		if(fp != NULL){
 			printf( "\n");
 			while((c = getc(fp)) != EOF){
@@ -188,7 +191,7 @@ void retrieveAndDisplayMovieReviews(char * movieTitle)
 		}
 		
 		fclose(fp);
-		exit(0);
+//		exit(0);
 	} else {
 		printf("\nError: You did not input a movie.");
 		exit(1);
