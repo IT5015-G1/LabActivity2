@@ -15,6 +15,7 @@ int genreUserInput(void);
 void retrieveAndDisplayMovieTitles(int genre);
 char * movieTitleUserInput(void);
 void retrieveAndDisplayMovieReviews(char movieTitle[]);
+void userChoiceMovie (void);
 
 /******************************************************************************
  * The program will only stop if the user chooses to exit the program. If     *
@@ -23,16 +24,43 @@ void retrieveAndDisplayMovieReviews(char movieTitle[]);
  ******************************************************************************/
 int main(void) 
 {
-	char * stringMovieTitle;
-	int genre;
-	
-	genre = genreUserInput();
-	retrieveAndDisplayMovieTitles(genre);
-	stringMovieTitle = movieTitleUserInput();
-	retrieveAndDisplayMovieReviews(stringMovieTitle);
+	userChoiceMovie ();	
+	printf("\n\tThank you for stopping by!");
 	
 	getch();
 	return 0;
+}
+
+/******************************************************************************
+  * The program will only stop if the user chooses to exit the program. 	  *
+  * If the user chooses to proceed to movie genre picking, the program        * 
+  * will call the functions from tasks 4 to 8. 							      *
+ ******************************************************************************/
+
+void userChoiceMovie (void)
+{
+	int choice = 0;
+	int genre;
+	char * stringMovieTitle;
+	
+	do{
+        printf("\nWelcome to the Movie Review!");
+        printf("\n(1) Proceed to Choosing a Movie Genre");
+        printf("\n(2) Exit");
+        printf("\n\nPlease choose: ");
+        scanf("%d",&choice);
+           
+        if(choice == 1){
+        	genre = genreUserInput();
+			retrieveAndDisplayMovieTitles(genre);
+			stringMovieTitle = movieTitleUserInput();
+			retrieveAndDisplayMovieReviews(stringMovieTitle);
+		}else if(choice != 1 && choice != 2){
+           printf("\n\nERROR: INPUT INVALID!\n");
+        }
+		
+     }while (choice != 2);
+     
 }
 
 /******************************************************************************
