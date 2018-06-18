@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <omp.h>
 
 /******************************************************************
  * Function Prototypes                                            *
@@ -44,9 +45,11 @@ void userChoiceMovie (void)
 	char * stringMovieTitle;
 	
 	do{
-        printf("\nWelcome to the Movie Review!");
-        printf("\n(1) Proceed to Choosing a Movie Genre");
-        printf("\n(2) Exit");
+		  printf("\n=====================================================");
+        printf("\n\tWelcome to the Movie Review!");
+        printf("\n\t(1) Proceed to Choosing a Movie Genre");
+        printf("\n\t(2) Exit");
+        printf("\n=====================================================");
         printf("\n\nPlease choose: ");
         scanf("%d",&choice);
            
@@ -83,7 +86,7 @@ int genreUserInput(void)
         scanf("%d",&genre);
      
         if(genre != 1 && genre != 2 && genre != 3 && genre != 4 && genre != 5){
-           printf("\n\nERROR: INPUT INVALID!\n");
+           printf("\n\nError: Invalid Input!\n");
         }
      }while (genre != 1 && genre != 2 && genre != 3 && genre != 4 && genre != 5);
      
@@ -125,6 +128,9 @@ void retrieveAndDisplayMovieTitles(int genre)
 		
 		default: printf("ERROR: Genre doesn't exist!"); break;
 	}
+
+	
+	printf("\nMovies Available...\n");
 	
 	if(strlen(stringGenre) != 0){
 		fp = fopen(stringGenre, "r");
@@ -150,7 +156,7 @@ char * movieTitleUserInput(void)
 {
 	char * stringMovieTitle = (char*)malloc(sizeof(char)*100);
 	
-	printf("\nPlease enter the movie title: ");
+	printf("Please enter the movie title: ");
 	fflush(stdin);	
 //	scanf("%s", stringMovieTitle);
 	fgets (stringMovieTitle, 100, stdin);
@@ -172,7 +178,7 @@ void retrieveAndDisplayMovieReviews(char * movieTitle)
 	FILE *fp;
 	
 	if(strlen(movieTitle) > 0){
-		printf("\n\t%s\n", movieTitle);
+		
 		char *movie = strcat(movieTitle, ".txt");
 		char c;
 		
@@ -180,20 +186,18 @@ void retrieveAndDisplayMovieReviews(char * movieTitle)
 		
 		
 		if(fp != NULL){
+			printf("\n\t%s\n", movieTitle);
 			printf( "\n");
 			while((c = getc(fp)) != EOF){
 				putchar(c);
 			}
 			printf("\n");
 		} else {
-			printf("\nError: Movie review for %s was not found.", movieTitle);
-			exit(1);
+			printf("\nError: Movie review for %s was not found.\n\nPlease try again from the top\n\n", movieTitle);
 		}
 		
 		fclose(fp);
-//		exit(0);
 	} else {
 		printf("\nError: You did not input a movie.");
-		exit(1);
 	}
 }
