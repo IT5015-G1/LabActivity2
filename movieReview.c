@@ -1,7 +1,7 @@
 /************************************************************************
- * Project Name:  Movie Review Viewer										      *
- * Programmers  : Group 1				                              		*
- * Date Completed: June 2018                                				*
+ * Project Name:  Movie Review Viewer								    *
+ * Programmers  : Group 1				                                *
+ * Date Completed: June 2018                                			*
  ***********************************************************************/
 
 #include <stdio.h>
@@ -21,7 +21,7 @@ void userChoiceMovie (void);
 /******************************************************************************
  * The program will only stop if the user chooses to exit the program. If     *
  * the user chooses to proceed to movie genre picking, the program will call  *
- * the functions from tasks 4 to 8.															*
+ * the functions from tasks 4 to 8.									  		  *
  ******************************************************************************/
 int main(void) 
 {
@@ -67,9 +67,9 @@ void userChoiceMovie (void)
 }
 
 /******************************************************************************
- * (1) Ask the user for input, display the genre menu, number each genre.		*	
- * (2) Return the integer value.																*
- * (3) The function should notify the user if he/she inputted the wrong value	*
+ * (1) Ask the user for input, display the genre menu, number each genre.	  *	
+ * (2) Return the integer value.										      *
+ * (3) The function should notify the user if he/she inputted the wrong value *
  ******************************************************************************/
 int genreUserInput(void)
 {
@@ -94,15 +94,15 @@ int genreUserInput(void)
 }
 
 /******************************************************************************
- * This function will accept an integer variable containing the numerical 		*
- *  value of the genre inputted by the user....											*
- *       																							*
+ * This function will accept an integer variable containing the numerical 	  *
+ *  value of the genre inputted by the user....								  *
+ *       																	  *
  * (1) Assign the string value using the integer value and store it in a      *
  *     string variable. Add '.txt' extension. Make sure the name that you will* 
- *	    assign matches the title of the existing textfile.							*
- * (2)Using the string variable, retrieve and display the movie titles			*
+ *	    assign matches the title of the existing textfile.					  *
+ * (2)Using the string variable, retrieve and display the movie titles		  *
  * (3)The function should notify the user if he/she inputted the wrong movie  *
- *    title (case-sensitive)																	*
+ *    title (case-sensitive)												  *
  ******************************************************************************/
 void retrieveAndDisplayMovieTitles(int genre)
 {
@@ -177,6 +177,7 @@ void retrieveAndDisplayMovieReviews(char * movieTitle)
 {
 	FILE *fp;
 	
+	#pragma omp task if(strlen(movieTitle) > 0)
 	if(strlen(movieTitle) > 0){
 		
 		char *movie = strcat(movieTitle, ".txt");
@@ -184,13 +185,16 @@ void retrieveAndDisplayMovieReviews(char * movieTitle)
 		
 		fp = fopen(movie, "r");
 		
-		
+		#pragma omp task if(fp != NULL)
 		if(fp != NULL){
 			printf("\n\t%s\n", movieTitle);
 			printf( "\n");
+
+			#pragma omp task shared(fp, c)
 			while((c = getc(fp)) != EOF){
 				putchar(c);
 			}
+			
 			printf("\n");
 		} else {
 			printf("\nError: Movie review for %s was not found.\n\nPlease try again from the top\n\n", movieTitle);
