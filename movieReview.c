@@ -44,15 +44,17 @@ void userChoiceMovie (void)
 	int genre;
 	char * stringMovieTitle;
 	
+	#pragma omp single
 	do{
-		  printf("\n=====================================================");
+		printf("\n=====================================================");
         printf("\n\tWelcome to the Movie Review!");
         printf("\n\t(1) Proceed to Choosing a Movie Genre");
         printf("\n\t(2) Exit");
         printf("\n=====================================================");
         printf("\n\nPlease choose: ");
         scanf("%d",&choice);
-           
+        
+        #pragma omp task if(choice == 1)
         if(choice == 1){
         	genre = genreUserInput();
 			retrieveAndDisplayMovieTitles(genre);
@@ -84,7 +86,7 @@ int genreUserInput(void)
         printf("\n(5) Action");
         printf("\n\nPlease choose a movie genre: ");
         scanf("%d",&genre);
-     
+     	
         if(genre != 1 && genre != 2 && genre != 3 && genre != 4 && genre != 5){
            printf("\n\nError: Invalid Input!\n");
         }
