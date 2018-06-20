@@ -112,6 +112,7 @@ void retrieveAndDisplayMovieTitles(int genre)
 	char stringGenre[] = "";		// Genre for file
 	char c;							// Contents of the file
 	
+	#pragma omp task switch(genre)
 	switch(genre){		// Searches for genre, otherwise, throw an error
 		// Horror
 		case 1: strcat(stringGenre, "Horror.txt"); break;
@@ -138,7 +139,8 @@ void retrieveAndDisplayMovieTitles(int genre)
 		fp = fopen(stringGenre, "r");
 	
 		if(fp != NULL){	
-    		while ((c = getc(fp)) != EOF){		// Iterates until the End of File (EOF)
+    		#pragma omp task shared(fp, c)
+			while ((c = getc(fp)) != EOF){		// Iterates until the End of File (EOF)
     			putchar(c);						// Directly print the movie titles
 			}
 			
